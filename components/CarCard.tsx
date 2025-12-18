@@ -5,13 +5,14 @@ import Image from "next/image";
 import { useState } from "react";
 import CustomButton from "./CustomButton";
 import { calculateCarRent } from "@/utils";
+import CarDetails from "./CarDetails";
 
 interface CarCardprops {
   car: CarProps;
 }
 
 const CarCard = ({ car }: CarCardprops) => {
-  const { city_mpg, year, make, model, transmission, drive } = car;
+  const { city_mpg, year, make, model, transmission, drive, image } = car;
 
   const carRent = calculateCarRent(city_mpg, year);
 
@@ -31,14 +32,12 @@ const CarCard = ({ car }: CarCardprops) => {
         <span className="self-end text-[14px] font-medium">/day</span>
       </p>
 
-      <div className="relative w-full h-40 my-3 object-contain">
-        <Image
-          src="/hero.png"
-          alt="car model"
-          fill
-          priority
-          className="object-contain"
-        />
+      <div className="relative w-full h-40 my-3 rounded-2xl bg-gradient-to-br from-primary-blue/80 via-primary-blue/60 to-slate-200 flex items-center justify-center text-white">
+        <div className="flex flex-col items-center gap-1 text-center px-4">
+          <span className="text-sm uppercase tracking-wide opacity-80">{make}</span>
+          <span className="text-lg font-semibold leading-tight capitalize">{model}</span>
+          <span className="text-xs opacity-80">{year} • {drive.toUpperCase()}</span>
+        </div>
       </div>
 
       <div className="relative flex w-full mt-2">
@@ -69,12 +68,15 @@ const CarCard = ({ car }: CarCardprops) => {
             title="View More"
             containerStyles="w-full py-[16px] rounded-full bg-primary-blue" 
             textStyles='text-white text-[14px] leading-[17px] font-bold'
-            righticon='/right-arrow.svg'
+            rightIcon='/right-arrow.svg'
             handleClick={() => setIsOpen(true)}
             />
 
         </div>
       </div>
+
+      <CarDetails 
+      isOpen={isOpen} closeModal={() => setIsOpen(false)} car={car}/>
     </div>
   );
 };
