@@ -30,6 +30,7 @@ const CustomFilter = ({ title, options }: CustomFilterProps) => {
       <Combobox
         value={selected}
         onChange={(option) => {
+          if (!option) return;
           setSelected(option);
           updateSearchParams(option);
         }}
